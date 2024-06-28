@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ author.name }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ author.name }}</h1>
+<p>{{ author.description }}</p>
+<p>{{ author.country }}</p>
+{% if author.photo %}
+    <img src="{{ author.photo.url }}" alt="">
+{% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load main_tags %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>Авторы</h1>
+{% for author in authors_p %}
+    <li><a href="{{ author.get_absolute_url }}">{{ author }}</a></li>
+{% endfor %}
+
+{% if page_obj.has_other_pages %}
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><<</a>
+    {% endif %}
+    {% if page_obj.number|add:-2 > 1 %}
+        <a href="?page=1"> 1 </a>
+        ...
+    {% endif %}
+    {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+            {{ p }}
+        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+            <a href="?page={{ p }}"> {{ p }} </a>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.number|add:2 < paginator.num_pages %}
+        ...
+        <a href="?page={{ paginator.num_pages }}"> {{ paginator.num_pages }} </a>
+    {% endif %}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">>></a>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
+

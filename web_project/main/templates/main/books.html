@@ -1,0 +1,143 @@
+{% extends 'main/base.html' %}
+{% load main_tags %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+<head>
+    <link rel="stylesheet" href="{% static 'main/css/books.css' %}">
+</head>
+{% block content %}
+
+<div class="container">
+    <div class="row">
+         <div class="col-3 d-none d-md-block">
+            <h3 class="text-center">Авторы</h3>
+            <div class="list-group">
+                {% for author in authors %}
+                {% if author.book__count > 0 %}
+                    {% if author.slug == author_selected %}
+                        <a href="" class="list-group-item list-group-item-action active" aria-current="true">
+                            {{ author }}
+                        </a>
+                    {% else %}
+                        <a href="{{ author.get_absolute_url_books }}" class="list-group-item list-group-item-action">{{ author }}</a>
+                    {% endif %}
+                {% else %}
+                    <a class="list-group-item list-group-item-action disabled" aria-disabled="true">{{ author }}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <h3 class="text-center">Категории</h3>
+            <div class="list-group">
+                {% for category in categories %}
+                {% if category.book__count > 0 %}
+                    {% if category.slug == category_selected %}
+                        <a href="" class="list-group-item list-group-item-action active" aria-current="true">
+                            {{ category }}
+                        </a>
+                    {% else %}
+                        <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-action">{{ category }}</a>
+                    {% endif %}
+                {% else %}
+                    <a class="list-group-item list-group-item-action disabled" aria-disabled="true">{{ category }}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <h3 class="text-center">Страны</h3>
+            <div class="list-group">
+                {% for country in countries %}
+                {% if country.book__count > 0 %}
+                    {% if country.slug == country_selected %}
+                        <a href="" class="list-group-item list-group-item-action active" aria-current="true">
+                            {{ country }}
+                        </a>
+                    {% else %}
+                        <a href="{{ country.get_absolute_url }}" class="list-group-item list-group-item-action">{{ country }}</a>
+                    {% endif %}
+                {% else %}
+                    <a class="list-group-item list-group-item-action disabled" aria-disabled="true">{{ country }}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+         </div>
+        <div class="col-sm-12 d-md-none">
+            allo
+        </div>
+        <div class="col">
+            <h3 class="text-center">{{ title }}</h3>
+            <div class="row justify-content-center">
+                {% for book in books %}
+                    <div class="card m-3 p-0" style="width: 18rem;">
+                      {% if book.photo %}
+                        <img src="{{ book.photo.url }}" class="card-img-top rounded" alt="..." height="300">
+                      {% endif %}
+                      <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p><a class="link-offset-3" href="{{ book.author.get_absolute_url }}" style="color: black">{{ book.author }}</a></p>
+                        <p class="card-text m-1">
+                            {% for cat in  book.category.all %}
+                                {{ cat }} {% if cat != book.category.all.last %} | {% endif %}
+                            {% endfor %}
+                        </p>
+                        <hr>
+                        <div class="row">
+                          <div class="col-6 text-center">
+                              <p class="price">{{ book.price }}</p>
+                          </div>
+                          <div class="col-6 text-center">
+                              <a href="#" class="btn btn-primary">Купить</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+            <br>
+            {% if page_obj.has_other_pages %}
+                <div class="row">
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                              </a>
+                            </li>
+                        {% endif %}
+                        {% if page_obj.number|add:-2 > 1 %}
+                             <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                             <li class="page-item disabled"><a class="page-link" href="">...</a></li>
+                        {% endif %}
+                        {% for p in paginator.page_range %}
+                            {% if page_obj.number == p %}
+                                <li class="page-item active"><a class="page-link" href="">{{ p }}</a></li>
+                            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.number|add:2 < paginator.num_pages %}
+                            <li class="page-item disabled"><a class="page-link" href="">...</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                      </ul>
+                    </nav>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<br><br>
+{% endblock %}
+

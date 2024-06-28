@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% load main_tags %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<h1>Категории</h1>
+{% get_categories as cats %}
+{% for cat in cats %}
+    <p>{{ cat }}</p>
+{% endfor %}
+{% endblock %}

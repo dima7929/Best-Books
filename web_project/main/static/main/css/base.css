@@ -1,0 +1,50 @@
+:root {
+    --bs-border-width: 2px;
+    --bs-btn-bg: red !important;
+    --background-color: #0736b5;
+    --passive-color: #fcfcfc;
+    --hover-1-color: #bf2a57;
+    --hover-2-color: #4685eb;
+    --active-color: #e6074a;
+}
+
+.content {
+    margin-top: 10vh;
+}
+
+.price {
+    font-size: 24px !important;
+    color: red !important;
+}
+
+
+.bg-body-tertiary {
+    background: var(--background-color) !important;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.nav-link, .navbar-brand {
+    color: var(--passive-color);
+}
+
+.nav-link:hover {
+    color: var(--hover-1-color);
+}
+
+.nav-link.active {
+    color: red !important;
+}
+
+.navbar-brand:hover {
+    color: var(--passive-color);
+}
+
+.btn-exit {
+    background-color: var(--background-color);
+    border: var(--bs-btn-border-width) solid var(--background-color);
+}
+
+.btn-exit:hover {
+    background-color: var(--hover-2-color);
+}
