@@ -6,6 +6,7 @@ from captcha.fields import CaptchaField
 
 from .models import *
 
+
 class AddBookForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -53,4 +54,3 @@ class ContactForm(forms.Form):
     name = forms.CharField(label='Имя', max_length=127, widget=forms.TextInput(attrs={'class': 'name_field'}))
     email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'class': 'email_field'}))
     content = forms.CharField(widget=forms.TextInput(attrs={'class': 'content_field'}))
-    capa = CaptchaField()

@@ -26,4 +26,8 @@ class DataMixin:
                 context['categories'] = Category.objects.annotate(Count('book'))
                 context['authors'] = Author.objects.annotate(Count('book'))
                 context['countries'] = Country.objects.annotate(Count('book'))
+                context['random_news'] = News.objects.order_by('?')[:1]
+                context['random_books'] = Book.objects.order_by('?')[:4]
+                context['random_authors'] = Author.objects.order_by('?')[:2]
+
                 return context

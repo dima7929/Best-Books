@@ -9,15 +9,23 @@
 <head>
     <link rel="stylesheet" href="{% static 'main/css/contact.css' %}">
 </head>
-
+<br><br>
+<h1 class="text-center">Свяжитесь с нами!</h1>
+<br><br>
 <form method="post">
     {% csrf_token %}
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form %}
-        <p><label class="form-input" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
-        <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-    <button type="submit">Отправить</button>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                {% for f in form %}
+                    <p><label class="form-input" for="{{ form.content.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                    <div class="form-error">{{ f.errors }}</div>
+                {% endfor %}
+                <button type="submit">Отправить</button>
+            </div>
+        </div>
+    </div>
 </form>
 
 

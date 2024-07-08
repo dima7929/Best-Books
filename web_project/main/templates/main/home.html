@@ -3,8 +3,166 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block content %}
-
-<h1>Главная</h1>
+{% block style %}
+    <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/books.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/news.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
 {% endblock %}
 
+{% block content %}
+
+<div class="logo" style="background-image: url({% static 'main/images/home_books.jpg' %})">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <p class="gradient-text">Best Books</p>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="row text-center">
+        <h1>Популярные книги</h1>
+    </div>
+</div>
+
+<br>
+
+<div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="row justify-content-center">
+                    {% for book in random_books %}
+                        <div class="card m-3 p-0" style="width: 18rem;">
+                          {% if book.photo %}
+                            <a href="{{ book.get_absolute_url }}">
+                                <img src="{{ book.photo.url }}" class="card-img-top rounded" alt="..." height="300">
+                            </a>
+                          {% endif %}
+                          <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p><a class="link-offset-3" href="{{ book.author.get_absolute_url }}" style="color: black">{{ book.author }}</a></p>
+                            <p class="card-text m-l-1">
+                                {% for cat in  book.category.all %}
+                                    {{ cat }} {% if cat != book.category.all.last %} | {% endif %}
+                                {% endfor %}
+                            </p>
+                            <hr>
+                            <div class="row">
+                              <div class="col-6 text-center">
+                                  <p class="price">{{ book.price }} <i class="fa-solid fa-ruble-sign"></i></p>
+                              </div>
+                              <div class="col-6 text-center">
+                                  <a href="{{ book.get_absolute_url }}" class="btn btn-primary">Купить</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <br>
+                <div class="row justify-content-center">
+                    <a href="{% url 'books' %}" class="btn btn-primary btn-lg">Открыть каталог</a>
+                </div>
+        </div>
+    </div>
+</div>
+<br><br>
+<hr>
+
+<div class="container">
+    <div class="row text-center">
+        <h1>Актуальные новости</h1>
+    </div>
+</div>
+
+<br><br>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            {% for n in random_news %}
+                <div class="card mb-3">
+                  <div id="carouselExampleIndicators" class="carousel slide">
+                      <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                      </div>
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="{{ n.photo_1.url }}" class="d-block w-100 hfix rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{ n.photo_2.url }}" class="d-block w-100 hfix rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{ n.photo_3.url }}" class="d-block w-100 hfix rounded" alt="...">
+                        </div>
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ n.title }}</h5>
+                    <p class="card-text">{{ n.content }}</p>
+                    <p class="card-text"><small class="text-body-secondary">{{ n.author }}</small></p>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<br>
+<hr>
+
+<div class="container">
+    <div class="row text-center">
+        <h1>Известные авторы</h1>
+    </div>
+</div>
+<br>
+
+<div class="container">
+    {% for author in random_authors %}
+    <div class="row justify-content-center">
+        <div class="card mb-4 p-0" style="max-width: 80%">
+          <div class="row g-0">
+            <div class="col-md-4 p-0">
+              {% if author.photo %}
+                <img src="{{ author.photo.url }}" class="card-img-top rounded" alt="..." style="height: 350px">
+              {% endif %}
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ author }}</h5>
+                <p class="card-text">{{ author.description|truncatewords:70 }}</p>
+                <p class="card-text"><small class="text-body-secondary">{{ author.country }}</small></p>
+              </div>
+              <div class="card-footer" style="background-color: white">
+                  <a href="{{ author.get_absolute_url}}">
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-primary" type="button">Узнать больше!</button>
+                    </div>
+                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

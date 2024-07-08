@@ -13,6 +13,7 @@ urlpatterns = [
     path('book/caregories/<slug:category_slug>', BookCategories.as_view(), name='show_books_category'),
     path('book/authors/<slug:author_slug>', BookAuthor.as_view(), name='show_books_author'),
     path('book/countries/<slug:country_slug>', BookCountry.as_view(), name='show_books_country'),
+    path('authors/countries/<slug:country_slug>', AuthorsCountry.as_view(), name='show_authors_country'),
     path('book/add_book/', AddBook.as_view(), name='add_book'),
     path('register/', RegisterUser.as_view(), name='register'),
     path('login/', LoginUser.as_view(), name='login'),

@@ -1,0 +1,24 @@
+.logo {
+    height: 700px;
+    weight: 100%;
+    color: white;
+    padding-top: 240px;
+    padding-right: 0px;
+    margin-right: 0px;
+    font-size: 140px;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: bold;
+}
+
+.content {
+    margin-top: 0vh;
+}
+
+.gradient-text {
+    background: linear-gradient(#f59f16, #f7f7f5, #f59f16);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+

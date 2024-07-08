@@ -3,7 +3,56 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block style %}
+    <link rel="stylesheet" href="{% static 'main/css/news.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<h1>Новости</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <h1 class="text-center">Новости</h1>
+            <hr>
+            <br>
+            {% for n in news %}
+                <div class="card mb-3">
+                  <div id="carouselExampleIndicators" class="carousel slide">
+                      <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                      </div>
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="{{ n.photo_1.url }}" class="d-block w-100 hfix rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{ n.photo_2.url }}" class="d-block w-100 hfix rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{ n.photo_3.url }}" class="d-block w-100 hfix rounded" alt="...">
+                        </div>
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ n.title }}</h5>
+                    <p class="card-text">{{ n.content }}</p>
+                    <p class="card-text"><small class="text-body-secondary">{{ n.author }}</small></p>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}

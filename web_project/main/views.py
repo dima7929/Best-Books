@@ -23,15 +23,6 @@ class HomePage(DataMixin, TemplateView):
         return dict(list(context.items()) + list(context_from_DataMixin.items()))
 
 
-class NewsPage(DataMixin, TemplateView):
-    template_name = 'main/news.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context_from_DataMixin = self.get_user_context(title="Новости")
-        return dict(list(context.items()) + list(context_from_DataMixin.items()))
-
-
 class BookPage(DataMixin, ListView):
     model = Book
     context_object_name = 'books'
@@ -113,12 +104,32 @@ class BookCountry(DataMixin, ListView):
 class AuthorsPage(DataMixin, ListView):
     model = Author
     template_name = 'main/authors.html'
-    context_object_name = 'authors_p'
+    context_object_name = 'authors_list'
     paginate_by = 3
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context_from_DataMixin = self.get_user_context(title="Авторы")
+        return dict(list(context.items()) + list(context_from_DataMixin.items()))
+
+
+class AuthorsCountry(DataMixin, ListView):
+    model = Author
+    template_name = 'main/authors.html'
+    context_object_name = 'authors_list'
+    allow_empty = False
+    paginate_by = 3
+
+    def get_queryset(self):
+        return Author.objects.filter(country__slug=self.kwargs['country_slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c = Country.objects.get(slug=self.kwargs['country_slug'])
+        context['category_selected'] = 0
+        context['author_selected'] = 0
+        context['country_selected'] = self.kwargs['country_slug']
+        context_from_DataMixin = self.get_user_context(title=f"Авторы: {c.name}")
         return dict(list(context.items()) + list(context_from_DataMixin.items()))
 
 
@@ -210,3 +221,16 @@ class ContactPage(DataMixin, FormView):
     def form_valid(self, form):
         print(form.cleaned_data)
         return redirect('home')
+
+
+class NewsPage(DataMixin, ListView):
+    model = News
+    template_name = 'main/news.html'
+    context_object_name = 'news'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context_from_DataMixin = self.get_user_context(title="Новости")
+        return dict(list(context.items()) + list(context_from_DataMixin.items()))
+
+

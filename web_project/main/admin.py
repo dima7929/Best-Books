@@ -53,10 +53,18 @@ class CountryAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
 
+class NewsAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ("title",)}
+    search_fields = ('title',)
+    ordering = ('title', 'slug')
+    readonly_fields = ('author', )
+
+
 admin.site.register(Book, BooksAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Country, CountryAdmin)
+admin.site.register(News, NewsAdmin)
 
 'Переопределение заголовка админ панели'
 admin.site.site_title = 'Администрирование'

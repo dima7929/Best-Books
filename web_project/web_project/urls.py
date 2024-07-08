@@ -21,7 +21,6 @@ from web_project import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('captcha/', include('captcha.urls')),
     path('', include('main.urls'))
 ]
 

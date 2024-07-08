@@ -1,5 +1,8 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django_currentuser.db.models import CurrentUserField
+
 
 # Create your models here.
 
@@ -26,8 +29,6 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('show_book', kwargs={'book_slug': self.slug})
-
-
 
 
 class Author(models.Model):
@@ -86,4 +87,25 @@ class Country(models.Model):
     def get_absolute_url(self):
         return reverse('show_books_country', kwargs={'country_slug': self.slug})
 
+    def get_absolute_url_authors(self):
+        return reverse('show_authors_country', kwargs={'country_slug': self.slug})
+
+
+class News(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Название')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
+    content = models.TextField(blank=True, verbose_name='Содержание')
+    author = CurrentUserField()
+    time_upload = models.DateTimeField(auto_now_add=True)
+    photo_1 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True, verbose_name='Фото_1')
+    photo_2 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True, verbose_name='Фото_2')
+    photo_3 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True, verbose_name='Фото_3')
+
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+        ordering = ['time_upload', 'slug']
+
+    def __str__(self):
+        return self.title
 
