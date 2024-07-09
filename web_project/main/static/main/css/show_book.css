@@ -1,0 +1,24 @@
+.border {
+    border: 4px double !important;
+    box-shadow: 3px 2px 2px #b1b1b3cd;
+}
+
+.mysize {
+    height: 500px;
+    width: 400px;
+}
+
+.textbook {
+    border: 2px solid !important;
+    margin: 5px;
+    border-radius: 20px;
+    text-align: justify;
+}
+
+.bookimg {
+    border: 4mm ridge ;
+}
+
+.params {
+    font-size: 20px;
+}

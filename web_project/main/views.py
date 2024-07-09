@@ -45,7 +45,7 @@ class BookCategories(DataMixin, ListView):
     template_name = 'main/books.html'
     context_object_name = 'books'
     allow_empty = False # Если список пуст -> 404
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         return Book.objects.filter(category__slug=self.kwargs['category_slug']).prefetch_related(
@@ -65,7 +65,7 @@ class BookAuthor(DataMixin, ListView):
     template_name = 'main/books.html'
     context_object_name = 'books'
     allow_empty = False
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         return Book.objects.filter(author__slug=self.kwargs['author_slug']).prefetch_related(
@@ -85,7 +85,7 @@ class BookCountry(DataMixin, ListView):
     template_name = 'main/books.html'
     context_object_name = 'books'
     allow_empty = False
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         return Book.objects.filter(country__slug=self.kwargs['country_slug']).prefetch_related(
@@ -105,7 +105,7 @@ class AuthorsPage(DataMixin, ListView):
     model = Author
     template_name = 'main/authors.html'
     context_object_name = 'authors_list'
-    paginate_by = 3
+    paginate_by = 4
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -118,7 +118,7 @@ class AuthorsCountry(DataMixin, ListView):
     template_name = 'main/authors.html'
     context_object_name = 'authors_list'
     allow_empty = False
-    paginate_by = 3
+    paginate_by = 4
 
     def get_queryset(self):
         return Author.objects.filter(country__slug=self.kwargs['country_slug'])

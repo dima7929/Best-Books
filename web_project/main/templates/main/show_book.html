@@ -3,12 +3,105 @@
 
 {% block title %}{{ book.title }}{% endblock %}
 
+{% block style %}
+    <link rel="stylesheet" href="{% static 'main/css/show_book.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/books.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<h1>{{ book.title }}</h1>
-<h2>{{ book.author }}</h2>
-<p>{{ book.content }}</p>
-{% if book.photo %}
-    <img src="{{ book.photo.url}}" alt="">
-{% endif %}
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">{{ book.title }}</h1>
+        <br>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-xl-9 col-sm-md-12 p-4" style="border: 2px solid !important;">
+            <div class="row p-4">
+                <div class="col-6">
+                    <div class="text-center">
+                    {% if book.photo %}
+                        <img src="{{ book.photo.url}}" alt="" class="rounded mysize bookimg">
+                    {% endif %}
+                </div>
+                </div>
+                <div class="col-6">
+                    <div class="params">
+                        <p>Категория:
+                            {% for cat in  book.category.all %}
+                                {{ cat }} {% if cat != book.category.all.last %} | {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p>Страна: {{ book.country }}</p>
+                        <p>Год публикации: {{ book.year_of_creation }}</p>
+                        <p>Цена: {{ book.price }} <i class="fa-solid fa-ruble-sign"></i></p>
+                        <a class="btn btn-primary" href="" role="button">Заказать</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <p class="textbook">{{ book.content }}</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-md-8">
+            <div class="row justify-content-center border p-2">
+                <h3 class="text-center">{{ book.author }}</h3>
+                {% if book.author.photo %}
+                    <img src="{{ book.author.photo.url}}" alt="" style="" class="img-thumbnail">
+                {% endif %}
+                <a class="btn btn-primary" href="{{ book.author.get_absolute_url }}" role="button">Перейти к автору</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="row text-center">
+        <h2>Редакция рекомендует</h2>
+    </div>
+</div>
+
+<br>
+
+<div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="row justify-content-center">
+                    {% for book in random_books %}
+                        <div class="card m-3 p-0" style="width: 18rem;">
+                          {% if book.photo %}
+                            <a href="{{ book.get_absolute_url }}">
+                                <img src="{{ book.photo.url }}" class="card-img-top rounded" alt="..." height="300">
+                            </a>
+                          {% endif %}
+                          <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p><a class="link-offset-3" href="{{ book.author.get_absolute_url }}" style="color: black">{{ book.author }}</a></p>
+                            <p class="card-text m-l-1">
+                                {% for cat in  book.category.all %}
+                                    {{ cat }} {% if cat != book.category.all.last %} | {% endif %}
+                                {% endfor %}
+                            </p>
+                            <hr>
+                            <div class="row">
+                              <div class="col-6 text-center">
+                                  <p class="price">{{ book.price }} <i class="fa-solid fa-ruble-sign"></i></p>
+                              </div>
+                              <div class="col-6 text-center">
+                                  <a href="{{ book.get_absolute_url }}" class="btn btn-primary">Купить</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

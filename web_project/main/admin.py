@@ -19,7 +19,7 @@ class BooksAdmin(admin.ModelAdmin):
 
     readonly_fields = ('time_upload', 'get_html_photo')
     fields = ('title', 'author', 'slug', 'content', 'year_of_creation', 'price',
-              'get_html_photo', 'category', 'country', 'time_upload')
+              'photo', 'category', 'country', 'time_upload')
 
     def get_html_photo(self, object):
         if object.photo:
