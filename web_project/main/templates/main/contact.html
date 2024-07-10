@@ -4,29 +4,44 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block content %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'main/css/show_book.css' %}">
+{% endblock %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'main/css/contact.css' %}">
-</head>
-<br><br>
-<h1 class="text-center">Свяжитесь с нами!</h1>
-<br><br>
-<form method="post">
-    {% csrf_token %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col">
+{% block content %}
+<br><br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5 m-2 ps-5 pe-5 pt-4 pb-3 login_border ">
+                <h2 class="text-center">Свяжитесь с нами!</h2>
+                <hr>
+                <form method="post">
+                {% csrf_token %}
                 <div class="form-error">{{ form.non_field_errors }}</div>
                 {% for f in form %}
-                    <p><label class="form-input" for="{{ form.content.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
-                    <div class="form-error">{{ f.errors }}</div>
+                    <div class="row justify-content-center m-3">
+                        <div class="col-4">
+                            <label class="form-input" for="{{ f.id_for_label }}">{{ f.label }}: </label>
+                        </div>
+                        <div class="col-8">
+                            {{ f }}
+                            {{ f.errors }}
+                            <div class="form-error"></div>
+                        </div>
+                    </div>
                 {% endfor %}
-                <button type="submit">Отправить</button>
-            </div>
+                <br>
+                <div class="row justify-content-center m-t-2">
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </div>
+            </form>
+            <br>
         </div>
     </div>
-</form>
+</div>
+<br><br><br>
+
+
 
 
 {% endblock %}

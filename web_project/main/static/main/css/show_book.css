@@ -9,16 +9,22 @@
 }
 
 .textbook {
-    border: 2px solid !important;
+    border: 2px solid #0736b5 !important;
     margin: 5px;
     border-radius: 20px;
     text-align: justify;
 }
 
 .bookimg {
-    border: 4mm ridge ;
+    border: 4mm ridge #7e9dc4;
 }
 
 .params {
     font-size: 20px;
+}
+
+.login_border {
+    border: 2px solid #0736b5 !important;
+    border-radius: 20px;
+    box-shadow: 6px 5px 5px #b1b1b3cd;
 }

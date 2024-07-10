@@ -4,18 +4,43 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-<head> <link rel="stylesheet" href="{% static 'main/css/register.css' %}"> </head>
+{% block style %}
+    <link rel="stylesheet" href="{% static 'main/css/show_book.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    {% for f in form %}
-        <p><label class="form-input" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
-        <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-    <button type="submit">Регистрация</button>
-</form>
+<br><br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5 m-2 ps-5 pe-5 pt-4 pb-3 login_border ">
+                <h2 class="text-center">Регистрация</h2>
+                <hr>
+                <form method="post">
+                {% csrf_token %}
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                {% for f in form %}
+                    <div class="row justify-content-center m-3">
+                        <div class="col-4">
+                            <label class="form-input" for="{{ f.id_for_label }}">{{ f.label }}: </label>
+                        </div>
+                        <div class="col-8">
+                            {{ f }}
+                            {{ f.errors }}
+                            <div class="form-error"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <br>
+                <div class="row justify-content-center m-t-2">
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+<br><br><br>
 
 
 {% endblock %}
